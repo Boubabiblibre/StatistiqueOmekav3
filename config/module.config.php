@@ -8,20 +8,20 @@ return [
             'SitesStatis\Controller\Admin\Index' => Service\Controller\Admin\IndexControllerFactory::class,
         ],
     ],
-    // 'navigation' => [
-    //     'AdminModule' => [
-    //         [
-    //             'label' => 'Sites Statis',
-    //             'route' => 'admin/Sites-Statis',
-    //             'resource' => 'SitesStatis\Controller\Admin\Index',
-    //         ],
-    //     ],
-    // ],
+    'navigation' => [
+        'AdminModule' => [
+            [
+                'label' => 'Sites Statis',
+                'route' => 'admin/Sites-Statis',
+                'resource' => 'SitesStatis\Controller\Admin\Index',
+            ],
+        ],
+    ],
     'router' => [
         'routes' => [
             'admin' => [
                 'child_routes' => [
-                    'Defap-import-collections' => [
+                    'Sites-Statis' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/sites-statis',
