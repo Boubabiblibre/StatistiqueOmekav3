@@ -1,0 +1,10 @@
+<?php echo $this->pageTitle($this->translate('Site Statistics')); ?>
+
+<div class="statistics">
+    <h2><?php echo $this->translate('Statistics'); ?></h2>
+    <ul>
+        <li><?php echo $this->translate('Total Items:'); ?> <?php echo $this->escapeHtml($statistics['totalItems']); ?></li>
+        <li><?php echo $this->translate('Total Collections:'); ?> <?php echo $this->escapeHtml($statistics['totalCollections']); ?></li>
+        <li><?php echo $this->translate('Total Users:'); ?> <?php echo $this->escapeHtml($statistics['totalUsers']); ?></li>
+    </ul>
+</div>
