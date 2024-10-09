@@ -11,6 +11,7 @@ class IndexControllerFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $em = $container->get('Omeka\EntityManager');
+
         return new IndexController($em);
     }
 }

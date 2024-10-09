@@ -1,16 +1,136 @@
 <?php echo $this->pageTitle($this->translate('Site Statistics')); ?>
 
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #4a90e2;
+        color: white;
+        font-weight: bold;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-striped tbody tr:nth-of-type(even) {
+        background-color: #e9f5ff;
+    }
+
+    .table-striped tbody tr:hover {
+        background-color: #d3e7ff;
+    }
+
+    .statistics h2, .sites h2, .modules h2 {
+        color: #4a90e2;
+        margin-bottom: 20px;
+    }
+</style>
+
 <div class="statistics">
     <h2><?php echo $this->translate('Statistics'); ?></h2>
-    <ul>
-        <li><?php echo $this->translate('Total Items:'); ?> <?php echo $this->escapeHtml($stats['totalItems']); ?></li>
-        <li><?php echo $this->translate('Total Collections:'); ?> <?php echo $this->escapeHtml($stats['totalCollections']); ?></li>
-        <li><?php echo $this->translate('Total Users:'); ?> <?php echo $this->escapeHtml($stats['totalUsers']); ?></li>
-    </ul>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th><?php echo $this->translate('Ressources'); ?></th>
+                <th><?php echo $this->translate('Value'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?php echo $this->translate('Total Items'); ?></td>
+                <td><?php echo $this->escapeHtml($stats['totalItems']); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->translate('Total ItemSets'); ?></td>
+                <td><?php echo $this->escapeHtml($stats['totalItemSets']); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->translate('Total Users'); ?></td>
+                <td><?php echo $this->escapeHtml($stats['totalUsers']); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->translate('Total Media'); ?></td>
+                <td><?php echo $this->escapeHtml($stats['totalMedia']); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->translate('Total Vocabularies'); ?></td>
+                <td><?php echo $this->escapeHtml($stats['totalVocabularies']); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->translate('Total Resource Templates'); ?></td>
+                <td><?php echo $this->escapeHtml($stats['totalResourceTemplates']); ?></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-<div class="sites">
 
-<?php foreach($sites as $site ){ ?>
-    <?php echo $site->getTitle(); ?>
-<?php } ?>
+<div class="sites">
+    <h2><?php echo $this->translate('Sites'); ?></h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th><?php echo $this->translate('Site Title'); ?></th>
+                <th><?php echo $this->translate('Items'); ?></th>
+                <th><?php echo $this->translate('Item Sets'); ?></th>
+                <!-- <th> echo $this->translate('Users'); ?></th> -->
+                <th><?php echo $this->translate('Media'); ?></th>
+                <th><?php echo $this->translate('Volume Media (octets)'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($sites as $siteStat): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($siteStat['site']->getTitle()); ?></td>
+                    <td><?php echo $this->escapeHtml($siteStat['totalItems']); ?></td>
+                    <td><?php echo $this->escapeHtml($siteStat['totalItemSets']); ?></td>
+                    <!-- <td> echo $this->escapeHtml($siteStat['totalUsers']); ?></td> -->
+                    <td><?php echo $this->escapeHtml($siteStat['totalMedia']); ?></td>
+                    <td><?php echo $this->escapeHtml($siteStat['totalMediaSize']); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
+
+<div class="modules">
+    <h2><?php echo $this->translate('Module Statistics'); ?></h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th><?php echo $this->translate('Description'); ?></th>
+                <th><?php echo $this->translate('Count'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?php echo $this->translate('Total Modules'); ?></td>
+                <td><?php echo $this->escapeHtml($modules['totalModules']); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->translate('Modules Installer'); ?></td>
+                <td><?php echo $this->escapeHtml($modules['installedModules']); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->translate('Modules Active'); ?></td>
+                <td><?php echo $this->escapeHtml($modules['enabledModules']); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->translate('Modules Desactive'); ?></td>
+                <td><?php echo $this->escapeHtml($modules['disabledModules']); ?></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
