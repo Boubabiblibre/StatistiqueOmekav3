@@ -24,6 +24,7 @@ class IndexController extends AbstractActionController
         $vocabulariesResp = $this->api()->search('vocabularies')->getContent();
         $resourceTemplatesResp = $this->api()->search('resource_templates')->getContent();
 
+
         $statistics = [
             'totalItems' => count($itemsResp),
             'totalItemSets' => count($itemsSetsResp),
@@ -32,6 +33,21 @@ class IndexController extends AbstractActionController
             'totalVocabularies' => count($vocabulariesResp),
             'totalResourceTemplates' => count($resourceTemplatesResp),
         ];
+
+        $directories = [
+            OMEKA_PATH . '/application',
+            OMEKA_PATH . '/modules',
+            OMEKA_PATH . '/themes',
+            OMEKA_PATH . '/config',
+            OMEKA_PATH . '/vendor',
+        ];
+
+        $totalOmekaSize = 0;
+        foreach ($directories as $directory) {
+            $totalOmekaSize += $this->getDirectorySize($directory);
+        }
+        $totalOmekaSizeInMB = $totalOmekaSize / 1048576;
+        $statistics['totalOmekaSize'] = number_format($totalOmekaSizeInMB, 2) . ' MB';
 
         $sites = $this->em->getRepository('Omeka\Entity\Site')->findAll();
         $siteStats = [];
@@ -43,8 +59,9 @@ class IndexController extends AbstractActionController
             $siteMedia = $this->api()->search('media', ['site_id' => $siteId])->getContent();
             $totalMediaSize = 0;
             foreach ($siteMedia as $media) {
-                $totalMediaSize += $media->getSize();
+                $totalMediaSize += $media->size();
             }
+            $totalMediaSizeInMB = $totalMediaSize / 1048576;
 
             $siteStats[] = [
                 'site' => $site,
@@ -52,7 +69,7 @@ class IndexController extends AbstractActionController
                 'totalItemSets' => count($siteItemSets),
                 'totalUsers' => count($siteUsers),
                 'totalMedia' => count($siteMedia),
-                'totalMediaSize' => $totalMediaSize . ' octets',
+                'totalMediaSize' => number_format($totalMediaSizeInMB, 2) . ' MB',
             ];
         }
 
@@ -85,4 +102,33 @@ class IndexController extends AbstractActionController
         $view->setVariable('sites', $siteStats);
         return $view;
     }
+    private function getDirectorySize($directory)
+    {
+        $size = 0;
+    
+        //parcourir tous les repertoire avec scandir
+        $files = scandir($directory);
+    
+        foreach ($files as $file) {
+        //j'ignore les repertoires speciaux
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+    
+            $filePath = $directory . '/' . $file;
+    
+            //quand c'est un fichie j'ajoute la taille
+            if (is_file($filePath)) {
+                $size += filesize($filePath);
+            }
+    
+           //quand c'est un repertoire j'utilise la fonction de maniere récursive
+            if (is_dir($filePath)) {
+                $size += $this->getDirectorySize($filePath);
+            }
+        }
+    
+        return $size;
+    }
+    
 }
