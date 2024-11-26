@@ -106,23 +106,18 @@ class IndexController extends AbstractActionController
     {
         $size = 0;
     
-        //parcourir tous les repertoire avec scandir
         $files = scandir($directory);
     
         foreach ($files as $file) {
-        //j'ignore les repertoires speciaux
             if ($file === '.' || $file === '..') {
                 continue;
             }
     
             $filePath = $directory . '/' . $file;
     
-            //quand c'est un fichie j'ajoute la taille
             if (is_file($filePath)) {
                 $size += filesize($filePath);
             }
-    
-           //quand c'est un repertoire j'utilise la fonction de maniere récursive
             if (is_dir($filePath)) {
                 $size += $this->getDirectorySize($filePath);
             }

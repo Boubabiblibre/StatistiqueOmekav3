@@ -32,11 +32,6 @@
         background-color: #d3e7ff;
     }
 
-    .statistics h2, .sites h2, .modules h2 {
-        color: #404e61;
-        margin-bottom: 20px;
-    }
-
     .custom-btn {
         padding: 10px 20px;
         border: 2px solid transparent;
@@ -51,16 +46,7 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    /* .primary-btn {
-        background-color: #404e61;
-        border-color: #404e61;
-    }
-
-    .primary-btn:hover {
-        background-color: #56607a;
-        border-color: #56607a;
-    } */
-
+   
     .success-btn {
         background-color: #28a745;
         border-color: #28a745;
@@ -91,128 +77,67 @@
         background-color: #ffca2c;
         border-color: #ffca2c;
     }
-
-    .custom-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  
+    .value-cell {
+        font-size: 18px;
+        font-weight: bold;
     }
-
-    .custom-btn:active {
-        transform: translateY(0);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .voir-plus-link {
+        margin-left: 20px;
+        font-size: 14px;
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
     }
-
-    
-    .chart-container {
-        width: 70%;
-        margin: auto;
-        height: 20%;
+    .voir-plus-link:hover {
+        color: #0056b3;
     }
-    .btn-lien {
-    width: 30px;
-    height: 30px;
-    background-color: #fff;
-    color: #404e61; 
-    border: 2px solid #ddd;
-    border-radius: 3px;
-    text-align: center;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.btn-lien:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.btn-lien:active {
-    transform: translateY(0); 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 </style>
-
 <div class="statistics">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th><?php echo $this->translate('Ressources'); ?></th>
-                <th><?php echo $this->translate('Value'); ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><?php echo $this->translate('Total Items'); ?></td>
-                <td>
-                    <a href="<?php echo $this->basePath(); ?>/admin/item">
-                        <button class="btn-lien" >
-                            <?php echo $this->escapeHtml($stats['totalItems']); ?>
-                        </button>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $this->translate('Total ItemSets'); ?></td>
-                <td>
-                    <a href="<?php echo $this->basePath(); ?>/admin/item-set">
-                        <button class="btn-lien">
-                            <?php echo $this->escapeHtml($stats['totalItemSets']); ?>
-                        </button>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $this->translate('Total Users'); ?></td>
-                <td>
-                    <a href="<?php echo $this->basePath(); ?>/admin/user">
-                        <button class="btn-lien">
-                            <?php echo $this->escapeHtml($stats['totalUsers']); ?>
-                        </button>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $this->translate('Total Medias'); ?></td>
-                <td>
-                    <a href="<?php echo $this->basePath(); ?>/admin/media">
-                        <button class="btn-lien">
-                            <?php echo $this->escapeHtml($stats['totalMedia']); ?>
-                        </button>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $this->translate('Total Vocabularies'); ?></td>
-                <td>
-                    <a href="<?php echo $this->basePath(); ?>/admin/vocabulary">
-                        <button class="btn-lien">
-                            <?php echo $this->escapeHtml($stats['totalVocabularies']); ?>
-                        </button>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $this->translate('Total Resource Templates'); ?></td>
-                <td>
-                    <a href="<?php echo $this->basePath(); ?>/admin/resource-template">
-                        <button class="btn-lien">
-                            <?php echo $this->escapeHtml($stats['totalResourceTemplates']); ?>
-                        </button>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $this->translate('Total Omeka Size'); ?></td>
-                <td><?php echo $this->escapeHtml($stats['totalOmekaSize']); ?></td>
-            </tr>
-        </tbody>
-    </table>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th><?php echo $this->translate('Ressources'); ?></th>
+            <th><?php echo $this->translate('Valeur'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><?php echo $this->translate('Total Items'); ?></td>
+            <td class="value-cell">
+                <?php echo $stats['totalItems']; ?>
+                <a href="<?php echo $this->basePath(); ?>/admin/item" class="voir-plus-link">Voir Plus</a>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->translate('Total ItemSets'); ?></td>
+            <td class="value-cell">
+                <?php echo $stats['totalItemSets']; ?>
+                <a href="<?php echo $this->basePath(); ?>/admin/item-set" class="voir-plus-link">Voir Plus</a>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->translate('Total Users'); ?></td>
+            <td class="value-cell">
+                <?php echo $stats['totalUsers']; ?>
+                <a href="<?php echo $this->basePath(); ?>/admin/user" class="voir-plus-link">Voir Plus</a>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->translate('Total Medias'); ?></td>
+            <td class="value-cell">
+                <?php echo $stats['totalMedia']; ?>
+                <a href="<?php echo $this->basePath(); ?>/admin/media" class="voir-plus-link">Voir Plus</a>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->translate('Total Omeka Size'); ?></td>
+            <td class="value-cell">
+                <?php echo $stats['totalOmekaSize']; ?>
+            </td>
+        </tr>
+    </tbody>
+</table>
 </div>
 
 <div class="sites">
@@ -249,16 +174,6 @@
             </tr>
         </thead>
         <tbody>
-            <!-- <tr>
-                <td><php echo $this->translate('Total Modules'); ?></td>
-                <td>
-                    <a href="<php echo $this->basePath(); ?>/admin/module">
-                        <button class="custom-btn primary-btn">
-                            <php echo $this->escapeHtml($modules['totalModules']); ?>
-                        </button>
-                    </a>
-                </td>
-            </tr> -->
             <tr>
                 <td><?php echo $this->translate('Installed Modules'); ?></td>
                 <td>
