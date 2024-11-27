@@ -39,7 +39,7 @@
 
     .table th, .table td {
         border: 1px solid #ddd;
-        padding: 4px;
+        padding: 6px;
         text-align: left;
     }
 
@@ -122,30 +122,37 @@
     .voir-plus-link:hover {
         color: #0056b3;
     }
-    /*pour la represnetation graphique */
+   
+    /* Pour le graphique */
     .chart-container {
         margin-top: 30px;
-        background: #fff;
         padding: 20px;
+        background: #fff;
         border: 1px solid #ddd;
         border-radius: 10px;
+        text-align: center;
     }
+
     .chart {
         display: flex;
         align-items: flex-end;
         justify-content: space-around;
         height: 300px;
+        margin-top: 20px;
+        position: relative;
         border-left: 2px solid #404e61;
         border-bottom: 2px solid #404e61;
-        position: relative;
-        padding: 10px;
-        margin-top: 20px;
+    }
+
+    .chart-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .chart-bar {
         width: 50px;
-        margin: 0 5px;
-        background-color: #007bff;
+        margin: 0 10px;
         text-align: center;
         color: white;
         border-radius: 5px 5px 0 0;
@@ -159,10 +166,35 @@
         font-weight: bold;
         color: #404e61;
     }
+    .totalItems {
+        background-color: #007bff;
+    }
 
-    .chart-labels {
-        display: flex;
-        justify-content: space-around;
+    .totalItemSets {
+        background-color: #17a2b8;
+    }
+
+    .totalUsers {
+        background-color: #bdc3c7;
+    }
+
+    .totalMedia {
+        background-color: #8e44ad;
+    }
+
+    .installedModules {
+        background-color: #ffc107;
+    }
+
+    .enabledModules {
+        background-color: #28a745;
+    }
+
+    .disabledModules {
+        background-color: #dc3545;
+    }
+
+    .chart-label {
         margin-top: 10px;
         font-size: 14px;
         font-weight: bold;
@@ -286,4 +318,71 @@
         </tbody>
     </table>
 </div>
-
+<div class="chart-container">
+    <h3><?php echo $this->translate('Graphique des statistiques'); ?></h3>
+    <div class="chart">
+        <div class="chart-group">
+            <div 
+                class="chart-bar totalItems" 
+                style="height: <?php echo $stats['totalItems'] * 2; ?>px;" 
+                title="Total Items: <?php echo $stats['totalItems']; ?>">
+                <span><?php echo $stats['totalItems']; ?></span>
+            </div>
+            <div class="chart-label">Total Items</div>
+        </div>
+        <div class="chart-group">
+            <div 
+                class="chart-bar totalItemSets" 
+                style="height: <?php echo $stats['totalItemSets'] * 2; ?>px;" 
+                title="Total ItemSets: <?php echo $stats['totalItemSets']; ?>">
+                <span><?php echo $stats['totalItemSets']; ?></span>
+            </div>
+            <div class="chart-label">Total ItemSets</div>
+        </div>
+        <div class="chart-group">
+            <div 
+                class="chart-bar totalUsers" 
+                style="height: <?php echo $stats['totalUsers'] * 2; ?>px;" 
+                title="Total Users: <?php echo $stats['totalUsers']; ?>">
+                <span><?php echo $stats['totalUsers']; ?></span>
+            </div>
+            <div class="chart-label">Total Users</div>
+        </div>
+        <div class="chart-group">
+            <div 
+                class="chart-bar totalMedia" 
+                style="height: <?php echo $stats['totalMedia'] * 2; ?>px;" 
+                title="Total Media: <?php echo $stats['totalMedia']; ?>">
+                <span><?php echo $stats['totalMedia']; ?></span>
+            </div>
+            <div class="chart-label">Total Media</div>
+        </div>
+        <div class="chart-group">
+            <div 
+                class="chart-bar installedModules" 
+                style="height: <?php echo $modules['installedModules'] * 2; ?>px;" 
+                title="Installed Modules: <?php echo $modules['installedModules']; ?>">
+                <span><?php echo $modules['installedModules']; ?></span>
+            </div>
+            <div class="chart-label">Installed Modules</div>
+        </div>
+        <div class="chart-group">
+            <div 
+                class="chart-bar enabledModules" 
+                style="height: <?php echo $modules['enabledModules'] * 2; ?>px;" 
+                title="Enabled Modules: <?php echo $modules['enabledModules']; ?>">
+                <span><?php echo $modules['enabledModules']; ?></span>
+            </div>
+            <div class="chart-label">Enabled Modules</div>
+        </div>
+        <div class="chart-group">
+            <div 
+                class="chart-bar disabledModules" 
+                style="height: <?php echo $modules['disabledModules'] * 2; ?>px;" 
+                title="Disabled Modules: <?php echo $modules['disabledModules']; ?>">
+                <span><?php echo $modules['disabledModules']; ?></span>
+            </div>
+            <div class="chart-label">Disabled Modules</div>
+        </div>
+    </div>
+</div>
