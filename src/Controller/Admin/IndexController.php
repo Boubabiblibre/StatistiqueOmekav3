@@ -42,13 +42,6 @@ class IndexController extends AbstractActionController
             OMEKA_PATH . '/vendor',
         ];
 
-        $totalOmekaSize = 0;
-        foreach ($directories as $directory) {
-            $totalOmekaSize += $this->getDirectorySize($directory);
-        }
-        $totalOmekaSizeInMB = $totalOmekaSize / 1048576;
-        $statistics['totalOmekaSize'] = number_format($totalOmekaSizeInMB, 2) . ' MB';
-
         $sites = $this->em->getRepository('Omeka\Entity\Site')->findAll();
         $siteStats = [];
         foreach ($sites as $site) {
@@ -95,38 +88,25 @@ class IndexController extends AbstractActionController
             'enabledModules' => count($enabledModules),
             'disabledModules' => count($disabledModules),
         ];
+        $storageStats = $this->getStorageStatistics();
 
         $view = new ViewModel();
         $view->setVariable('stats', $statistics);
         $view->setVariable('modules', $moduleStatistics);
         $view->setVariable('sites', $siteStats);
+        $view->setVariable('storage', $storageStats);
         return $view;
     }
-    private function getDirectorySize($directory)
+    private function getStorageStatistics()
     {
-        $size = 0;
-    
-        $files = scandir($directory);
-    
-        foreach ($files as $file) {
-            if ($file === '.' || $file === '..') {
-                continue;
-            }
-    
-            $filePath = $directory . '/' . $file;
-    
-            if (is_file($filePath)) {
-                $size += filesize($filePath);
-            }
-            if (is_dir($filePath)) {
-                $size += $this->getDirectorySize($filePath);
-            }
-        }
-    
-        return $size;
-    }
-    
+        $totalSpace = disk_total_space(OMEKA_PATH);
+        $freeSpace = disk_free_space(OMEKA_PATH); 
+        $usedSpace = $totalSpace - $freeSpace; 
+
+        return [
+            'totalSpace' => number_format($totalSpace / 1048576, 2) . ' MB',
+            'freeSpace' => number_format($freeSpace / 1048576, 2) . ' MB',
+            'usedSpace' => number_format($usedSpace / 1048576, 2) . ' MB',
+        ];
+    }   
 }
-
-
-

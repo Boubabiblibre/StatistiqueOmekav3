@@ -9,12 +9,12 @@
     }
 
     .table-container {
-        width: 48%; 
+        width: 48%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        min-height: 300px; 
-        background: #f9f9f9; 
+        min-height: 300px;
+        background: #f9f9f9;
         padding: 10px;
         border: 1px solid #ddd;
         box-sizing: border-box;
@@ -37,9 +37,10 @@
         font-family: Arial, sans-serif;
     }
 
-    .table th, .table td {
+    .table th,
+    .table td {
         border: 1px solid #ddd;
-        padding: 6px;
+        padding: 4px;
         text-align: left;
     }
 
@@ -111,18 +112,6 @@
         font-weight: bold;
     }
 
-    .voir-plus-link {
-        margin-left: 20px;
-        font-size: 14px;
-        text-decoration: none;
-        color: #007bff;
-        font-weight: bold;
-    }
-
-    .voir-plus-link:hover {
-        color: #0056b3;
-    }
-   
     /* Pour le graphique */
     .chart-container {
         margin-top: 30px;
@@ -166,6 +155,7 @@
         font-weight: bold;
         color: #404e61;
     }
+
     .totalItems {
         background-color: #007bff;
     }
@@ -215,41 +205,108 @@
                 <tr>
                     <td><?php echo $this->translate('Total Items'); ?></td>
                     <td class="value-cell">
-                        <?php echo $stats['totalItems']; ?>
-                        <a href="<?php echo $this->basePath(); ?>/admin/item" class="voir-plus-link">Voir Plus</a>
+                        <a href="<?php echo $this->basePath(); ?>/admin/item">
+                            <?php echo $stats['totalItems']; ?>
+                        </a>
                     </td>
                 </tr>
                 <tr>
                     <td><?php echo $this->translate('Total ItemSets'); ?></td>
                     <td class="value-cell">
-                        <?php echo $stats['totalItemSets']; ?>
-                        <a href="<?php echo $this->basePath(); ?>/admin/item-set" class="voir-plus-link">Voir Plus</a>
+                        <a href="<?php echo $this->basePath(); ?>/admin/item-set">
+                            <?php echo $stats['totalItemSets']; ?>
+                        </a>
                     </td>
                 </tr>
                 <tr>
                     <td><?php echo $this->translate('Total Users'); ?></td>
                     <td class="value-cell">
-                        <?php echo $stats['totalUsers']; ?>
-                        <a href="<?php echo $this->basePath(); ?>/admin/user" class="voir-plus-link">Voir Plus</a>
+                        <a href="<?php echo $this->basePath(); ?>/admin/user">
+                            <?php echo $stats['totalUsers']; ?>
+                        </a>
                     </td>
                 </tr>
                 <tr>
                     <td><?php echo $this->translate('Total Medias'); ?></td>
                     <td class="value-cell">
-                        <?php echo $stats['totalMedia']; ?>
-                        <a href="<?php echo $this->basePath(); ?>/admin/media" class="voir-plus-link">Voir Plus</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo $this->translate('Total Omeka Size'); ?></td>
-                    <td class="value-cell">
-                        <?php echo $stats['totalOmekaSize']; ?>
+                        <a href="<?php echo $this->basePath(); ?>/admin/media">
+                            <?php echo $stats['totalMedia']; ?>
+                        </a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+    <div class="table-container">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th><?php echo $this->translate('Espace'); ?></th>
+                    <th><?php echo $this->translate('Valeur'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php echo $this->translate('Espace Total'); ?></td>
+                    <td class="value-cell">
+                        <?php echo $storage['totalSpace']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><?php echo $this->translate('Espace Libre'); ?></td>
+                    <td class="value-cell">
+                        <?php echo $storage['freeSpace']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><?php echo $this->translate('Espace Utilisé'); ?></td>
+                    <td class="value-cell">
+                        <?php echo $storage['usedSpace']; ?>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="statistics-container">
+    <div class="table-container">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th><?php echo $this->escapeHtml('Site Title'); ?></th>
+                    <th><?php echo $this->escapeHtml('Items'); ?></th>
+                    <th><?php echo $this->escapeHtml('Item Sets'); ?></th>
+                    <th><?php echo $this->escapeHtml('Media'); ?></th>
+                    <th><?php echo $this->escapeHtml('Volume Media (MB)'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($sites as $siteStat): ?>
+                    <tr>
+                        <td><?php echo $this->escapeHtml($siteStat['site']->getTitle()); ?></td>
+                        <td class="value-cell">
+                            <a href="<?php echo $this->url('admin/default', ['controller' => 'item', 'action' => 'browse'], ['query' => ['site_id' => $siteStat['site']->getId()]]); ?>">
+                                <?php echo $this->escapeHtml($siteStat['totalItems']); ?>
+                            </a>
+                        </td>
+                        <td class="value-cell">
+                            <a href="<?php echo $this->url('admin/default', ['controller' => 'item-set', 'action' => 'browse'], ['query' => ['site_id' => $siteStat['site']->getId()]]); ?>">
+                                <?php echo $this->escapeHtml($siteStat['totalItemSets']); ?>
+                            </a>
+                        </td>
+                        <td class="value-cell">
+                            <a href="<?php echo $this->url('admin/default', ['controller' => 'media', 'action' => 'browse'], ['query' => ['site_id' => $siteStat['site']->getId()]]); ?>">
+                                <?php echo $this->escapeHtml($siteStat['totalMedia']); ?>
+                            </a>
+                        </td>
+                        <td><?php echo $this->escapeHtml($siteStat['totalMediaSize']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <div class="table-container">
         <table class="table table-striped table-bordered">
             <thead>
@@ -294,91 +351,67 @@
     </div>
 </div>
 
-<div class="bottom-container">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th><?php echo $this->escapeHtml('Site Title'); ?></th>
-                <th><?php echo $this->escapeHtml('Items'); ?></th>
-                <th><?php echo $this->escapeHtml('Item Sets'); ?></th>
-                <th><?php echo $this->escapeHtml('Media'); ?></th>
-                <th><?php echo $this->escapeHtml('Volume Media (MB)'); ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($sites as $siteStat): ?>
-                <tr>
-                    <td><?php echo $this->escapeHtml($siteStat['site']->getTitle()); ?></td>
-                    <td><?php echo $this->escapeHtml($siteStat['totalItems']); ?></td>
-                    <td><?php echo $this->escapeHtml($siteStat['totalItemSets']); ?></td>
-                    <td><?php echo $this->escapeHtml($siteStat['totalMedia']); ?></td>
-                    <td><?php echo $this->escapeHtml($siteStat['totalMediaSize']); ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
 <div class="chart-container">
     <h3><?php echo $this->translate('Graphique des statistiques'); ?></h3>
     <div class="chart">
         <div class="chart-group">
-            <div 
-                class="chart-bar totalItems" 
-                style="height: <?php echo $stats['totalItems'] * 2; ?>px;" 
+            <div
+                class="chart-bar totalItems"
+                style="height: <?php echo $stats['totalItems'] * 2; ?>px;"
                 title="Total Items: <?php echo $stats['totalItems']; ?>">
                 <span><?php echo $stats['totalItems']; ?></span>
             </div>
             <div class="chart-label">Total Items</div>
         </div>
         <div class="chart-group">
-            <div 
-                class="chart-bar totalItemSets" 
-                style="height: <?php echo $stats['totalItemSets'] * 2; ?>px;" 
+            <div
+                class="chart-bar totalItemSets"
+                style="height: <?php echo $stats['totalItemSets'] * 2; ?>px;"
                 title="Total ItemSets: <?php echo $stats['totalItemSets']; ?>">
                 <span><?php echo $stats['totalItemSets']; ?></span>
             </div>
             <div class="chart-label">Total ItemSets</div>
         </div>
         <div class="chart-group">
-            <div 
-                class="chart-bar totalUsers" 
-                style="height: <?php echo $stats['totalUsers'] * 2; ?>px;" 
+            <div
+                class="chart-bar totalUsers"
+                style="height: <?php echo $stats['totalUsers'] * 2; ?>px;"
                 title="Total Users: <?php echo $stats['totalUsers']; ?>">
                 <span><?php echo $stats['totalUsers']; ?></span>
             </div>
             <div class="chart-label">Total Users</div>
         </div>
         <div class="chart-group">
-            <div 
-                class="chart-bar totalMedia" 
-                style="height: <?php echo $stats['totalMedia'] * 2; ?>px;" 
+            <div
+                class="chart-bar totalMedia"
+                style="height: <?php echo $stats['totalMedia'] * 2; ?>px;"
                 title="Total Media: <?php echo $stats['totalMedia']; ?>">
                 <span><?php echo $stats['totalMedia']; ?></span>
             </div>
             <div class="chart-label">Total Media</div>
         </div>
         <div class="chart-group">
-            <div 
-                class="chart-bar installedModules" 
-                style="height: <?php echo $modules['installedModules'] * 2; ?>px;" 
+            <div
+                class="chart-bar installedModules"
+                style="height: <?php echo $modules['installedModules'] * 2; ?>px;"
                 title="Installed Modules: <?php echo $modules['installedModules']; ?>">
                 <span><?php echo $modules['installedModules']; ?></span>
             </div>
             <div class="chart-label">Installed Modules</div>
         </div>
         <div class="chart-group">
-            <div 
-                class="chart-bar enabledModules" 
-                style="height: <?php echo $modules['enabledModules'] * 2; ?>px;" 
+            <div
+                class="chart-bar enabledModules"
+                style="height: <?php echo $modules['enabledModules'] * 2; ?>px;"
                 title="Enabled Modules: <?php echo $modules['enabledModules']; ?>">
                 <span><?php echo $modules['enabledModules']; ?></span>
             </div>
             <div class="chart-label">Enabled Modules</div>
         </div>
         <div class="chart-group">
-            <div 
-                class="chart-bar disabledModules" 
-                style="height: <?php echo $modules['disabledModules'] * 2; ?>px;" 
+            <div
+                class="chart-bar disabledModules"
+                style="height: <?php echo $modules['disabledModules'] * 2; ?>px;"
                 title="Disabled Modules: <?php echo $modules['disabledModules']; ?>">
                 <span><?php echo $modules['disabledModules']; ?></span>
             </div>
