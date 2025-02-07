@@ -286,21 +286,9 @@
                 <?php foreach ($sites as $siteStat): ?>
                     <tr>
                         <td><?php echo $this->escapeHtml($siteStat['site']->getTitle()); ?></td>
-                        <td class="value-cell">
-                            <a href="<?php echo $this->url('admin/default', ['controller' => 'item', 'action' => 'browse'], ['query' => ['site_id' => $siteStat['site']->getId()]]); ?>">
-                                <?php echo $this->escapeHtml($siteStat['totalItems']); ?>
-                            </a>
-                        </td>
-                        <td class="value-cell">
-                            <a href="<?php echo $this->url('admin/default', ['controller' => 'item-set', 'action' => 'browse'], ['query' => ['site_id' => $siteStat['site']->getId()]]); ?>">
-                                <?php echo $this->escapeHtml($siteStat['totalItemSets']); ?>
-                            </a>
-                        </td>
-                        <td class="value-cell">
-                            <a href="<?php echo $this->url('admin/default', ['controller' => 'media', 'action' => 'browse'], ['query' => ['site_id' => $siteStat['site']->getId()]]); ?>">
-                                <?php echo $this->escapeHtml($siteStat['totalMedia']); ?>
-                            </a>
-                        </td>
+                        <td><?php echo $this->escapeHtml($siteStat['totalItems']); ?></td>
+                        <td><?php echo $this->escapeHtml($siteStat['totalItemSets']); ?></td>
+                        <td><?php echo $this->escapeHtml($siteStat['totalMedia']); ?></td>
                         <td><?php echo $this->escapeHtml($siteStat['totalMediaSize']); ?></td>
                     </tr>
                 <?php endforeach; ?>
